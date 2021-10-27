@@ -50,6 +50,7 @@ namespace Platformer.Mechanics
             if (collected) return;
             //disable the gameObject and remove it from the controller update list.
             frame = 0;
+            player.score += 100;
             sprites = collectedAnimation;
             if (controller != null)
                 collected = true;

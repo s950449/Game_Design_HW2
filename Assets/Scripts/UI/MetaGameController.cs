@@ -1,7 +1,7 @@
 using Platformer.Mechanics;
 using Platformer.UI;
 using UnityEngine;
-
+using UnityEngine.UI;
 namespace Platformer.UI
 {
     /// <summary>
@@ -14,7 +14,12 @@ namespace Platformer.UI
         /// The main UI object which used for the menu.
         /// </summary>
         public MainUIController mainMenu;
-
+        public GameUIController GameOverMenu;
+        public StartMenuUIController startMenu;
+        private float elapsedTime = 0.0f;
+        [SerializeField] private Text _points;
+        [SerializeField] private Text _time;
+        [SerializeField] private Text _findAlien;
         /// <summary>
         /// A list of canvas objects which are used during gameplay (when the main ui is turned off)
         /// </summary>
@@ -26,6 +31,8 @@ namespace Platformer.UI
         public GameController gameController;
 
         bool showMainCanvas = false;
+        public bool isGameOver = false;
+        bool started = false;
 
         void OnEnable()
         {
@@ -60,12 +67,34 @@ namespace Platformer.UI
             }
             this.showMainCanvas = show;
         }
-
+        private void Start()
+        {
+            _findAlien.text = "No";
+            Time.timeScale = 0;
+            startMenu.gameObject.SetActive(true);
+        }
         void Update()
         {
-            if (Input.GetButtonDown("Menu"))
+            elapsedTime += Time.deltaTime;
+            started = startMenu.isStarted;
+            isGameOver = gameController.model.player.gameOver;
+            if (Input.GetButtonDown("Menu")&&!isGameOver&&started)
             {
                 ToggleMainMenu(show: !showMainCanvas);
+            }
+            int timeInt = (int)elapsedTime;
+            _time.text = timeInt.ToString();
+            _points.text = gameController.model.player.score.ToString();
+            if (gameController.model.player.canwin)
+            {
+                _findAlien.text = "Yes";
+            }
+            if (gameController.model.player.gameOver)
+            {
+                isGameOver = true;
+                Time.timeScale = 0;
+                elapsedTime = 0;
+                GameOverMenu.gameObject.SetActive(true);
             }
         }
 

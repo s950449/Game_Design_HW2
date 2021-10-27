@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 namespace Platformer.UI
 {
     /// <summary>
@@ -17,7 +16,7 @@ namespace Platformer.UI
             {
                 var active = i == index;
                 var g = panels[i];
-                if (g.activeSelf != active) g.SetActive(active);
+                if (g.activeSelf != active) g.SetActive(active);                
             }
         }
 

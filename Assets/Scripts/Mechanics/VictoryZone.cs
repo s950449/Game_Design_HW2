@@ -1,7 +1,7 @@
 using Platformer.Gameplay;
 using UnityEngine;
+using Platformer.Model;
 using static Platformer.Core.Simulation;
-
 namespace Platformer.Mechanics
 {
     /// <summary>
@@ -12,7 +12,9 @@ namespace Platformer.Mechanics
         void OnTriggerEnter2D(Collider2D collider)
         {
             var p = collider.gameObject.GetComponent<PlayerController>();
-            if (p != null)
+            PlatformerModel model = GetModel<PlatformerModel>();
+            bool canWin = model.player.animator.GetBool("canWin");
+            if (p != null && canWin)
             {
                 var ev = Schedule<PlayerEnteredVictoryZone>();
                 ev.victoryZone = this;

@@ -30,6 +30,9 @@ namespace Platformer.Mechanics
         public JumpState jumpState = JumpState.Grounded;
         private bool stopJump;
         private float runEff = 1;
+        public int score = 0;
+        public bool canwin = false;
+        public bool gameOver = false;
         /*internal new*/ public Collider2D collider2d;
         /*internal new*/ public AudioSource audioSource;
         public Health health;

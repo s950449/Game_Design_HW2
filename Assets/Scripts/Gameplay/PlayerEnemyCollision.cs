@@ -24,6 +24,7 @@ namespace Platformer.Gameplay
 
             if (willHurtEnemy)
             {
+                player.score += 200;
                 var enemyHealth = enemy.GetComponent<Health>();
                 if (enemyHealth != null)
                 {
