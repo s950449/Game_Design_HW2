@@ -33,6 +33,7 @@ namespace Platformer.Mechanics
         public int score = 0;
         public bool canwin = false;
         public bool gameOver = false;
+        public bool aliensay = false;
         /*internal new*/ public Collider2D collider2d;
         /*internal new*/ public AudioSource audioSource;
         public Health health;

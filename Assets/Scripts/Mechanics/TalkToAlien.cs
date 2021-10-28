@@ -16,10 +16,11 @@ namespace Platformer.Mechanics
         {
             var p = collider.gameObject.GetComponent<PlayerController>();
             PlatformerModel model = Simulation.GetModel<PlatformerModel>();
-            if (p != null)
+            if (p != null && model.player.canwin == false)
             {
                 model.player.animator.SetBool("canWin", true);
                 model.player.canwin = true;
+                model.player.aliensay = true;
             }
         }
     }

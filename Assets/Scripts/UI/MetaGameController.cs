@@ -16,7 +16,10 @@ namespace Platformer.UI
         public MainUIController mainMenu;
         public GameUIController GameOverMenu;
         public StartMenuUIController startMenu;
+        public DiagramController alienDiagram;
         private float elapsedTime = 0.0f;
+        [SerializeField] private AudioClip notify;
+        [SerializeField] private AudioClip endGame;
         [SerializeField] private Text _points;
         [SerializeField] private Text _time;
         [SerializeField] private Text _findAlien;
@@ -33,7 +36,7 @@ namespace Platformer.UI
         bool showMainCanvas = false;
         public bool isGameOver = false;
         bool started = false;
-
+        private bool inDiagram = false;
         void OnEnable()
         {
             _ToggleMainMenu(showMainCanvas);
@@ -72,13 +75,23 @@ namespace Platformer.UI
             _findAlien.text = "No";
             Time.timeScale = 0;
             startMenu.gameObject.SetActive(true);
+            GameOverMenu.endGame = endGame;
         }
         void Update()
         {
             elapsedTime += Time.deltaTime;
             started = startMenu.isStarted;
             isGameOver = gameController.model.player.gameOver;
-            if (Input.GetButtonDown("Menu")&&!isGameOver&&started)
+            inDiagram = alienDiagram.gameObject.activeSelf;
+            if (gameController.model.player.aliensay)
+            {
+                inDiagram = true;
+                gameController.model.player.audioSource.PlayOneShot(notify);
+                Time.timeScale = 0;
+                gameController.model.player.aliensay = false;
+                alienDiagram.gameObject.SetActive(true);
+            }
+            if (Input.GetButtonDown("Menu")&&!isGameOver&&started&&!inDiagram)
             {
                 ToggleMainMenu(show: !showMainCanvas);
             }

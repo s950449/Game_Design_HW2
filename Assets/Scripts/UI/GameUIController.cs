@@ -9,11 +9,13 @@ namespace Platformer.UI
     {
         [SerializeField] public Button RetryButton;
         [SerializeField] public Button QuitButton;
-        private bool gameOver = false;
-        private bool retry = false;
+        [SerializeField] public AudioSource audioSource;
+        public AudioClip endGame;
         // Start is called before the first frame update
         void Start()
         {
+            audioSource = GetComponent<AudioSource>();
+            audioSource.PlayOneShot(endGame);
             QuitButton.onClick.AddListener(QuitGame);
             RetryButton.onClick.AddListener(Retry);
             RetryButton.Select();
